@@ -22,14 +22,23 @@ def rabbitGrowth():
     global CURRENTRABBITPOP
 
     # TO DO
-    p_rabbit_rep = 1 - float(CURRENTRABBITPOP) / MAXRABBITPOP
     
-    for rabbit in range(CURRENTRABBITPOP):
-        if random.random() <= p_rabbit_rep:
-            CURRENTRABBITPOP += 1
+    
+   
+    
+    # intial condition check
+    if not (CURRENTRABBITPOP<10 and CURRENTFOXPOP<10):
+        
+        
+        # calculate p_rabbit_rep every time for each iteration 
+        # need not to check max condition after implementing this
+        for rabbit in range(CURRENTRABBITPOP):
+            p_rabbit_rep = 1 - float(CURRENTRABBITPOP) / MAXRABBITPOP
+            if random.random() <= p_rabbit_rep:
+                CURRENTRABBITPOP += 1
 
-    if CURRENTRABBITPOP > MAXRABBITPOP:
-        CURRENTRABBITPOP = MAXRABBITPOP
+    #if CURRENTRABBITPOP > MAXRABBITPOP:
+    #    CURRENTRABBITPOP = MAXRABBITPOP
             
 def foxGrowth():
     """ 
@@ -52,18 +61,23 @@ def foxGrowth():
     global CURRENTFOXPOP
 
     # TO DO
-    p_fox_eats_rabbit = float(CURRENTRABBITPOP) / MAXRABBITPOP
-    for fox in range(CURRENTFOXPOP):
-        if random.random() <= p_fox_eats_rabbit:
-            # Give birth to a fox
-            if CURRENTRABBITPOP > 10:
-                CURRENTRABBITPOP -= 1
-                if random.random() <= 1.0/3:
-                    CURRENTFOXPOP += 1
-        else:
-            # Dies fail hunting
-            if random.random() >= 0.9 and CURRENTFOXPOP > 10:
-                CURRENTFOXPOP -= 1
+    # intial condition check
+    if not (CURRENTRABBITPOP<10 and CURRENTFOXPOP<10):
+        
+        
+        # calculate p_fox_eats_rabbit every time for each iteration 
+        for fox in range(CURRENTFOXPOP):
+            p_fox_eats_rabbit = float(CURRENTRABBITPOP) / MAXRABBITPOP
+            if random.random() <= p_fox_eats_rabbit:
+                    # Give birth to a fox
+                    if CURRENTRABBITPOP > 10:
+                        CURRENTRABBITPOP -= 1
+                        if random.random() <= 1.0/3:
+                            CURRENTFOXPOP += 1
+                    else:
+                    # Dies fail hunting
+                        if random.random() >= 0.9 and CURRENTFOXPOP > 10:
+                            CURRENTFOXPOP -= 1
     
             
 def runSimulation(numSteps):
